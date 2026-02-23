@@ -1,0 +1,48 @@
+import java.util.Scanner;
+public class DNASequenceAnalyzer {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        System.out.print("Enter DNA sequence: ");
+        String dna = scanner.nextLine().toUpperCase();
+        int countA = 0, countT = 0, countG = 0, countC = 0;
+        for (int i = 0; i < dna.length(); i++) {
+            char ch = dna.charAt(i);
+            if (ch == 'A') countA++;
+            else if (ch == 'T') countT++;
+            else if (ch == 'G') countG++;
+            else if (ch == 'C') countC++;
+        }
+        System.out.println("Occurrences:");
+        System.out.println("A: " + countA);
+        System.out.println("T: " + countT);
+        System.out.println("G: " + countG);
+        System.out.println("C: " + countC);
+        StringBuilder reverseComplement = new StringBuilder();
+        for (int i = dna.length() - 1; i >= 0; i--) {
+            char ch = dna.charAt(i);
+            if (ch == 'A') reverseComplement.append('T');
+            else if (ch == 'T') reverseComplement.append('A');
+            else if (ch == 'G') reverseComplement.append('C');
+            else if (ch == 'C') reverseComplement.append('G');
+        }
+        System.out.println("Reverse Complement: " + reverseComplement.toString());
+        System.out.print("Enter a character (A/T/G/C) to generate 10000-length test sequence: ");
+        char base = scanner.next().toUpperCase().charAt(0);
+        int size = 10000;
+        long startConcat = System.nanoTime();
+        String testConcat = "";
+        for (int i = 0; i < size; i++) {
+            testConcat += base;
+        }
+        long endConcat = System.nanoTime();
+        long startBuilder = System.nanoTime();
+        StringBuilder testBuilder = new StringBuilder();
+        for (int i = 0; i < size; i++) {
+            testBuilder.append(base);
+        }
+        long endBuilder = System.nanoTime();
+        System.out.println("String Concatenation Time (ns): " + (endConcat - startConcat));
+        System.out.println("StringBuilder Append Time (ns): " + (endBuilder - startBuilder));
+        scanner.close();
+    }
+}
