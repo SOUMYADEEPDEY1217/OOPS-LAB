@@ -1,0 +1,39 @@
+import java.util.Scanner;
+interface Electronic {
+    void consumePower();
+}
+interface SmartFeature {
+    void connectToInternet();
+}
+class SmartFridge implements Electronic, SmartFeature {
+    private int coolingLevel;
+    private String ipAddress;
+    public SmartFridge(int coolingLevel, String ipAddress) {
+        this.coolingLevel = coolingLevel;
+        this.ipAddress = ipAddress;
+    }
+    @Override
+    public void consumePower() {
+        int powerUsage = coolingLevel * 10; 
+        System.out.println("\n[Status] Power Usage: " + powerUsage + " Watts (Cooling Level: " + coolingLevel + ")");
+    }
+    @Override
+    public void connectToInternet() {
+        System.out.println("[Status] Connected to Internet via IP: " + ipAddress);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        System.out.println("--- Smart Fridge Setup ---");
+        System.out.print("Enter Cooling Level (1-10): ");
+        int level = input.nextInt();
+        input.nextLine(); 
+        System.out.print("Enter IP Address: ");
+        String ip = input.nextLine();
+        SmartFridge myFridge = new SmartFridge(level, ip);
+        myFridge.consumePower();
+        myFridge.connectToInternet();
+        input.close();
+    }
+}
