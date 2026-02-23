@@ -1,0 +1,32 @@
+import java.util.Scanner;
+import java.util.InputMismatchException;
+class Calculator {
+    public void divide(int a, int b) {
+        try {
+            int result = a / b;
+            System.out.println("Result: " + result);
+        } catch (ArithmeticException e) {
+            System.out.println("Error: Cannot divide by zero! (ArithmeticException)");
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Calculator calc = new Calculator();
+        try {
+            System.out.print("Enter first number (integer): ");
+            int num1 = sc.nextInt();
+            System.out.print("Enter second number (integer): ");
+            int num2 = sc.nextInt();
+            calc.divide(num1, num2);
+        } catch (InputMismatchException e) {
+            System.out.println("Error: Invalid input! Please enter whole numbers only. (InputMismatchException)");
+        } catch (Exception e) {
+            System.out.println("Error: An unexpected error occurred: " + e.getMessage());
+        } finally {
+            System.out.println("Calculation attempt finished.");
+            sc.close();
+        }
+    }
+}
