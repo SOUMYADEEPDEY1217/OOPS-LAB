@@ -1,9 +1,13 @@
+import java.util.Scanner;
 public class BooleanDemo {
     public static void main(String[] args) {
-        boolean status = true;
+        Scanner sc = new Scanner(System.in);
+        boolean status;
+        System.out.print("Enter first boolean value (true/false): ");
+        status = sc.nextBoolean();
         System.out.println("Value of status: " + status);
-
-        status = false;
+        System.out.print("Enter second boolean value (true/false): ");
+        status = sc.nextBoolean();
         System.out.println("Value of status after reinitialization: " + status);
     }
 }
