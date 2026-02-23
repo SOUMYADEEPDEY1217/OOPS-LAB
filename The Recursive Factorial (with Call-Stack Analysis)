@@ -1,0 +1,32 @@
+import java.util.Scanner;
+class MathWizard {
+    public static long factorial(int n) {
+        if (n == 0) {
+            return 1;
+        }
+        return n * factorial(n - 1);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("--- The Factorial Experiment ---");
+        System.out.print("Enter a number (Try 5 for success, or -1 to crash the stack): ");
+        try {
+            int userInput = sc.nextInt();
+            if (userInput < 0) {
+                System.out.println("\n[Warning] Starting infinite recursion for: " + userInput);
+            }    
+            long result = MathWizard.factorial(userInput);
+            System.out.println("Result: " + result);
+        } catch (StackOverflowError e) {
+            System.err.println("\nCRASH REPORT: StackOverflowError detected!");
+            System.err.println("REASON: Every recursive call created a new 'stack frame'.");
+            System.err.println("Since -1 never reaches 0, the stack memory was exhausted.");
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please enter an integer.");
+        } finally {
+            sc.close();
+        }
+    }
+}
