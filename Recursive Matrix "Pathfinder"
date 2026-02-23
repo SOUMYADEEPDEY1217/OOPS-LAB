@@ -1,0 +1,37 @@
+import java.util.Scanner;
+class MazeSolver {
+    public static boolean findPath(int[][] grid, int row, int col) {
+        int rows = grid.length;
+        int cols = grid[0].length;
+        if (row == rows - 1 && col == cols - 1) {
+            return true;
+        }
+        if (row < 0 || col < 0 || row >= rows || col >= cols || grid[row][col] != 1) {
+            return false;
+        }
+        grid[row][col] = 9;
+        if (findPath(grid, row + 1, col)) return true;
+        if (findPath(grid, row, col + 1)) return true;
+        return false;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter grid size (N for NxN): ");
+        int n = sc.nextInt();
+        int[][] maze = new int[n][n];
+        System.out.println("Enter the grid (1 for path, 0 for wall):");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                maze[i][j] = sc.nextInt();
+            }
+        }
+        if (MazeSolver.findPath(maze, 0, 0)) {
+            System.out.println("Path Found: Yes");
+        } else {
+            System.out.println("Path Found: No");
+        }
+        sc.close();
+    }
+}
