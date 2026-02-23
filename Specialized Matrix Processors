@@ -1,0 +1,66 @@
+import java.util.Scanner;
+class Matrix {
+    int rows;
+    int cols;
+    int[][] arr;
+    Matrix(int rows, int cols, int[][] arr) {
+        this.rows = rows;
+        this.cols = cols;
+        this.arr = arr;
+    }
+    void displayProperties() {
+        System.out.println("Rows: " + rows);
+        System.out.println("Columns: " + cols);
+    }
+}
+class SquareMatrix extends Matrix {
+
+    SquareMatrix(int n, int[][] arr) {
+        super(n, n, arr);
+    }
+    void displayProperties() {
+        super.displayProperties();
+        int trace = 0;
+        for (int i = 0; i < rows; i++) {
+            trace += arr[i][i];
+        }
+        System.out.println("Trace: " + trace);
+    }
+    void checkIdentity() {
+        boolean identity = true;
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                if (i == j && arr[i][j] != 1)
+                    identity = false;
+                if (i != j && arr[i][j] != 0)
+                    identity = false;
+            }
+        }
+        if (identity)
+            System.out.println("It is an Identity Matrix");
+        else
+            System.out.println("It is NOT an Identity Matrix");
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter size of square matrix: ");
+        int n = sc.nextInt();
+
+        int[][] arr = new int[n][n];
+
+        System.out.println("Enter matrix elements:");
+        for (int i = 0; i < n; i++) {
+            for (int j = 0; j < n; j++) {
+                arr[i][j] = sc.nextInt();
+            }
+        }
+        SquareMatrix sm = new SquareMatrix(n, arr);
+        System.out.println("\nMatrix Properties:");
+        sm.displayProperties();
+        sm.checkIdentity();
+    }
+}
