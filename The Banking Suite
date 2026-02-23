@@ -1,0 +1,36 @@
+import java.util.Scanner;
+class Bank {
+    double getInterestRate() {
+        return 0;
+    }
+}
+class SBI extends Bank {
+    double getInterestRate() {
+        return 5.0;
+    }
+}
+class ICICI extends Bank {
+    double getInterestRate() {
+        return 7.0;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        Bank bank;
+        System.out.println("Select Bank:");
+        System.out.println("1. SBI");
+        System.out.println("2. ICICI");
+        int choice = sc.nextInt();
+        if (choice == 1) {
+            bank = new SBI();
+            System.out.println("SBI Interest Rate: " + bank.getInterestRate() + "%");
+        } else if (choice == 2) {
+            bank = new ICICI();
+            System.out.println("ICICI Interest Rate: " + bank.getInterestRate() + "%");
+        } else {
+            bank = new Bank();
+            System.out.println("Invalid Choice. Interest Rate: " + bank.getInterestRate() + "%");
+        }
+    }
+}
