@@ -1,0 +1,62 @@
+import java.util.Scanner;
+interface RemoteControl {
+    void powerOn();
+    void powerOff();
+    void volumeUp();
+}
+class Television implements RemoteControl {
+    public void powerOn() {
+        System.out.println("TV screen is glowing.");
+    }
+    public void powerOff() {
+        System.out.println("TV is shutting down.");
+    }
+    public void volumeUp() {
+        System.out.println("TV volume is increasing.");
+    }
+}
+class AudioSystem implements RemoteControl {
+    public void powerOn() {
+        System.out.println("Audio speakers are booming.");
+    }
+    public void powerOff() {
+        System.out.println("Audio system is turning off.");
+    }
+    public void volumeUp() {
+        System.out.println("Audio volume is rising.");
+    }
+}
+public class RemoteControlSystem {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        RemoteControl device;
+        System.out.println("Choose a device:");
+        System.out.println("1. Television");
+        System.out.println("2. Audio System");
+        int choice = scanner.nextInt();
+        if (choice == 1) {
+            device = new Television();
+        } else if (choice == 2) {
+            device = new AudioSystem();
+        } else {
+            System.out.println("Invalid choice.");
+            scanner.close();
+            return;
+        }
+        System.out.println("Choose an action:");
+        System.out.println("1. Power On");
+        System.out.println("2. Power Off");
+        System.out.println("3. Volume Up");
+        int action = scanner.nextInt();
+        if (action == 1) {
+            device.powerOn();
+        } else if (action == 2) {
+            device.powerOff();
+        } else if (action == 3) {
+            device.volumeUp();
+        } else {
+            System.out.println("Invalid action.");
+        }
+        scanner.close();
+    }
+}
