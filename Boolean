@@ -1,0 +1,9 @@
+public class BooleanDemo {
+    public static void main(String[] args) {
+        boolean status = true;
+        System.out.println("Value of status: " + status);
+
+        status = false;
+        System.out.println("Value of status after reinitialization: " + status);
+    }
+}
