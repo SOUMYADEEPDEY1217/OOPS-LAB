@@ -1,0 +1,68 @@
+import java.util.Scanner;
+class Shape {
+    double area() {
+        return 0;
+    }
+}
+class Circle extends Shape {
+    double r;
+    Circle(double r) {
+        this.r = r;
+    }
+    double area() {
+        return 3.14 * r * r;
+    }
+}
+class Square extends Shape {
+    double side;
+    Square(double side) {
+        this.side = side;
+    }
+    double area() {
+        return side * side;
+    }
+}
+class Rectangle extends Shape {
+    double length, breadth;
+
+    Rectangle(double length, double breadth) {
+        this.length = length;
+        this.breadth = breadth;
+    }
+    double area() {
+        return length * breadth;
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.println("1. Circle");
+        System.out.println("2. Square");
+        System.out.println("3. Rectangle");
+        System.out.print("Enter choice: ");
+        int choice = sc.nextInt();
+        if (choice == 1) {
+            System.out.print("Enter radius: ");
+            double r = sc.nextDouble();
+            Circle c = new Circle(r);
+            System.out.println("Area = " + c.area());
+        } 
+        else if (choice == 2) {
+            System.out.print("Enter side: ");
+            double s = sc.nextDouble();
+            Square sq = new Square(s);
+            System.out.println("Area = " + sq.area());
+        } 
+        else if (choice == 3) {
+            System.out.print("Enter length: ");
+            double l = sc.nextDouble();
+            System.out.print("Enter breadth: ");
+            double b = sc.nextDouble();
+            Rectangle rec = new Rectangle(l, b);
+            System.out.println("Area = " + rec.area());
+        } 
+        else {
+            System.out.println("Invalid choice");
+        }
+    }
+}
