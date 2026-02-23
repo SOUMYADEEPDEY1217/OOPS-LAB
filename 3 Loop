@@ -1,0 +1,46 @@
+import java.util.Scanner;
+public class LoopDemo {
+    void forLoopArray(Scanner sc) {
+        System.out.print("Enter size of array: ");
+        int n = sc.nextInt();
+        int arr[] = new int[n];
+        System.out.println("Enter " + n + " elements:");
+        for (int i = 0; i < n; i++) {
+            arr[i] = sc.nextInt();
+        }
+        System.out.println("For Loop with Array:");
+        for (int i = 0; i < n; i++) {
+            System.out.println(arr[i]);
+        }
+    }
+    void whileLoopNumbers(Scanner sc) {
+        System.out.print("Enter a number: ");
+        int num = sc.nextInt();
+        int i = 1;
+
+        System.out.println("While Loop with Numbers:");
+        while (i <= num) {
+            System.out.println(i);
+            i++;
+        }
+    }
+    void doWhileString(Scanner sc) {
+        sc.nextLine(); 
+        System.out.print("Enter a string: ");
+        String str = sc.nextLine();
+        int i = 1;
+        System.out.println("Do-While Loop printing String:");
+        do {
+            System.out.println(str);
+            i++;
+        } while (i <= 3);
+    }
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        LoopDemo obj = new LoopDemo();
+        obj.forLoopArray(sc);
+        obj.whileLoopNumbers(sc);
+        obj.doWhileString(sc);
+        sc.close();
+    }
+}
