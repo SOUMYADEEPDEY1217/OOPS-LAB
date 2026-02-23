@@ -1,0 +1,74 @@
+import java.util.Scanner;
+class MatrixMath {
+    int[][] add(int[][] matrix, int scalar) {
+        int rows = matrix.length;
+        int cols = matrix[0].length;
+        int[][] result = new int[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = matrix[i][j] + scalar;
+            }
+        }
+        return result;
+    }
+    int[][] add(int[][] matrixA, int[][] matrixB) {
+        int rows = matrixA.length;
+        int cols = matrixA[0].length;
+        if (rows != matrixB.length || cols != matrixB[0].length) {
+            System.out.println("Matrix dimensions do not match!");
+            return null;
+        }
+
+        int[][] result = new int[rows][cols];
+
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                result[i][j] = matrixA[i][j] + matrixB[i][j];
+            }
+        }
+        return result;
+    }
+    void display(int[][] matrix) {
+        if (matrix == null) return;
+
+        for (int i = 0; i < matrix.length; i++) {
+            for (int j = 0; j < matrix[0].length; j++) {
+                System.out.print(matrix[i][j] + " ");
+            }
+            System.out.println();
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        MatrixMath obj = new MatrixMath();
+        System.out.print("Enter rows: ");
+        int rows = sc.nextInt();
+        System.out.print("Enter columns: ");
+        int cols = sc.nextInt();
+        int[][] matrixA = new int[rows][cols];
+        int[][] matrixB = new int[rows][cols];
+        System.out.println("Enter elements of Matrix A:");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrixA[i][j] = sc.nextInt();
+            }
+        }
+        System.out.println("Enter elements of Matrix B:");
+        for (int i = 0; i < rows; i++) {
+            for (int j = 0; j < cols; j++) {
+                matrixB[i][j] = sc.nextInt();
+            }
+        }
+        System.out.print("Enter scalar value: ");
+        int scalar = sc.nextInt();
+        System.out.println("Scalar Addition Result:");
+        int[][] scalarResult = obj.add(matrixA, scalar);
+        obj.display(scalarResult);
+        System.out.println("Matrix Addition Result:");
+        int[][] matrixResult = obj.add(matrixA, matrixB);
+        obj.display(matrixResult);
+    }
+}
