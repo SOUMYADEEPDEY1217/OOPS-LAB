@@ -1,0 +1,28 @@
+import java.util.Scanner;
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        int[] data = {10, 20, 30};
+        System.out.println("Part 1: Array Access (Size is 3)");
+        System.out.print("Enter an index to read: ");
+        try {
+            int index = sc.nextInt();
+            System.out.println("Value at index " + index + " is: " + data[index]);
+        } catch (ArrayIndexOutOfBoundsException e) {
+            System.out.println("Caught Unchecked Exception: Index is out of range!");
+        }
+        System.out.println("\n-----------------------------------\n");
+        System.out.println("Part 2: Class Loading");
+        System.out.print("Enter a class name (e.g., java.lang.Integer): ");
+        String className = sc.next();
+        try {
+            Class<?> loadedClass = Class.forName(className);
+            System.out.println("Success! Found class: " + loadedClass.getName());
+        } catch (ClassNotFoundException e) {
+            System.out.println("Caught Checked Exception: That class does not exist.");
+        } finally {
+            sc.close();
+            System.out.println("\nExperiment complete.");
+        }
+    }
+}
