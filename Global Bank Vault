@@ -1,0 +1,33 @@
+import java.util.Scanner;
+class BankVault {
+    private static double totalVaultBalance = 0;
+    public static void deposit(double amount) {
+        totalVaultBalance += amount;
+        System.out.println("Deposit of " + amount + " successful.");
+    }
+    public static void showBalance() {
+        System.out.println("Current Total Vault Balance: " + totalVaultBalance);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        BankVault user1 = new BankVault();
+        BankVault user2 = new BankVault();
+        BankVault user3 = new BankVault();
+        System.out.print("User 1, enter deposit amount: ");
+        double amt1 = sc.nextDouble();
+        user1.deposit(amt1);
+        BankVault.showBalance();
+        System.out.print("\nUser 2, enter deposit amount: ");
+        double amt2 = sc.nextDouble();
+        user2.deposit(amt2);
+        BankVault.showBalance();
+        System.out.print("\nUser 3, enter deposit amount: ");
+        double amt3 = sc.nextDouble();
+        user3.deposit(amt3);
+        System.out.println("\n--- Final Verification ---");
+        BankVault.showBalance();
+        sc.close();
+    }
+}
