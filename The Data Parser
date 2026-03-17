@@ -1,0 +1,28 @@
+import java.util.Scanner;
+class DataProcessor {
+    public int parseData(String input) 
+    throws NumberFormatException {
+    return Integer.parseInt(input);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        DataProcessor processor = new DataProcessor();
+        System.out.println("Data Parser System");
+        System.out.print("Enter a number to process: ");
+        try {
+            String userInput = scanner.nextLine();
+            try {
+                int result = processor.parseData(userInput);
+                System.out.println("Success! Processed Value: " + result);
+            } 
+            catch (NumberFormatException e) {
+                System.err.println("Error: Could not parse '" + userInput + "'. Data must be a numeric integer.");
+            }
+        } catch (Exception e) {
+            System.err.println("An unexpected error occurred during input.");
+        } 
+        System.out.println("Process terminated.");
+    }
+}
