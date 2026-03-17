@@ -1,0 +1,41 @@
+import java.util.Scanner;
+class NumberPrinter extends Thread {
+    int limit;
+    NumberPrinter(int limit) {
+        this.limit = limit;
+    }
+    public void run() {
+        try {
+            for (int i = 1; i <= limit; i++) {
+                System.out.println("Number: " + i);
+                Thread.sleep(500);
+            }
+        } catch (Exception e) {
+            System.out.println(e);
+        }
+    }
+}
+class LetterPrinter implements Runnable {
+    char end;
+    LetterPrinter(char end) {
+        this.end = end;
+    }
+    public void run() {
+        for (char ch = 'A'; ch <= end; ch++) {
+            System.out.println("Letter: " + ch);
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        System.out.print("Enter number limit: ");
+        int n = sc.nextInt();
+        System.out.print("Enter ending letter: ");
+        char c = sc.next().charAt(0);
+        NumberPrinter t1 = new NumberPrinter(n);
+        Thread t2 = new Thread(new LetterPrinter(c));
+        t1.start();
+        t2.start();
+    }
+}
