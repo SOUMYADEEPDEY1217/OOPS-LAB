@@ -1,0 +1,33 @@
+import java.util.Scanner;
+class InvalidAgeException extends RuntimeException {
+    public InvalidAgeException(String message) {
+        super(message);
+    }
+}
+class ElectionBooth {
+    public void checkEligibility(int age) {
+        if (age < 18) {
+            throw new InvalidAgeException("Underage voters not allowed.");
+        } else {
+            System.out.println("Welcome! You are eligible to cast your vote.");
+        }
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        ElectionBooth booth = new ElectionBooth();
+        System.out.print("Enter your age to vote: ");
+        try {
+            int userAge = scanner.nextInt();
+            booth.checkEligibility(userAge);
+        } catch (InvalidAgeException e) {
+            System.out.println("Error: " + e.getMessage());
+        } catch (Exception e) {
+            System.out.println("Invalid input. Please enter a numerical age.");
+        } finally {
+            scanner.close();
+            System.out.println("Booth session closed.");
+        }
+    }
+}
