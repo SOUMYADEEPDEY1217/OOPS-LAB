@@ -1,0 +1,49 @@
+public class FlagTrafficLight {
+    static class TrafficLight implements Runnable {
+        private volatile boolean emergencyMode = false;
+        private volatile boolean running = true;
+        public void triggerEmergency() {
+            this.emergencyMode = true;
+        }
+        public void shutDown() {
+            this.running = false;
+        }
+        @Override
+        public void run() {
+            while (running) {
+                if (!emergencyMode) {
+                    runNormalCycle();
+                } else {
+                    runEmergencyCycle();
+                }
+            }
+            System.out.println("[Traffic Light] System Powered Down.");
+        }
+        private void runNormalCycle() {
+            String[] colors = {"RED", "YELLOW", "GREEN"};
+            for (String color : colors) {
+                if (emergencyMode) return; 
+                System.out.println("[Traffic Light] " + color + " ");
+                sleepHelper(2000);
+            }
+        }
+        private void runEmergencyCycle() {
+            System.out.println("[Traffic Light] BLINKING YELLOW... (Emergency Mode)");
+            sleepHelper(500);
+        }
+        private void sleepHelper(int ms) {
+            try { Thread.sleep(ms); } catch (InterruptedException e) { }
+        }
+    }
+    public static void main(String[] args) throws InterruptedException {
+        TrafficLight lightLogic = new TrafficLight();
+        Thread lightThread = new Thread(lightLogic);
+        lightThread.start();
+        Thread.sleep(7000);
+        System.out.println("\n[Main] Switching to Emergency Mode via Flag...");
+        lightLogic.triggerEmergency();
+        Thread.sleep(3000);
+        System.out.println("\n[Main] Shutting down system...");
+        lightLogic.shutDown();
+    }
+}
