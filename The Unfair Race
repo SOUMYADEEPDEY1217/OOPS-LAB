@@ -1,0 +1,41 @@
+public class UnfairRace {
+    static class CounterThread extends Thread {
+        public volatile boolean running = true;
+        public long count = 0;
+        public CounterThread(String name) {
+            super(name);
+        }
+        @Override
+        public void run() {
+            while (running) {
+                count++;
+            }
+        }
+    }
+    public static void main(String[] args) throws
+    InterruptedException {
+    CounterThread lowPriority = new CounterThread("Low-Priority");
+    CounterThread normPriority = new CounterThread("Normal-Priority");
+        CounterThread highPriority = new CounterThread("High-Priority");
+        lowPriority.setPriority(Thread.MIN_PRIORITY);    
+        normPriority.setPriority(Thread.NORM_PRIORITY);  
+        highPriority.setPriority(Thread.MAX_PRIORITY);   
+        System.out.println("Starting the race for 3 seconds...");
+        lowPriority.start();
+        normPriority.start();
+        highPriority.start();
+        Thread.sleep(3000);
+        lowPriority.running = false;
+        normPriority.running = false;
+        highPriority.running = false;
+        lowPriority.join();
+        normPriority.join();
+        highPriority.join();
+        System.out.println("\n--- Race Results ---");
+        System.out.println(lowPriority.getName() + " (Priority 1)  Count: " + lowPriority.count);
+        System.out.println(normPriority.getName() + " (Priority 5)  Count: " + normPriority.count);
+        System.out.println(highPriority.getName() + " (Priority 10) Count: " + highPriority.count);
+        long difference = highPriority.count - lowPriority.count;
+        System.out.println("\nDifference (High - Low): " + difference);
+    }
+}
