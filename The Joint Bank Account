@@ -1,0 +1,41 @@
+import java.util.Scanner;
+class BankAccount {
+    private int balance = 1000;
+    public void withdraw(int amount) {
+        System.out.println(Thread.currentThread().getName() + " is checking balance");
+        if (balance >= amount) {
+            System.out.println(Thread.currentThread().getName() + " sees enough money. Proceeding");
+            try { 
+                Thread.sleep(100); 
+            } catch (InterruptedException e) {}
+            balance -= amount;
+            System.out.println(Thread.currentThread().getName() + " withdrew $" + amount);
+            System.out.println("Remaining Balance: $" + balance);
+        } else {
+            System.out.println("Sorry " + Thread.currentThread().getName() + ", not enough funds.");
+        }
+    }
+}
+class FamilyMember extends Thread {
+    BankAccount account;
+    FamilyMember(BankAccount account, String name) {
+        super(name);
+        this.account = account;
+    }
+    public void run() {
+        account.withdraw(1000);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner input = new Scanner(System.in);
+        BankAccount sharedAccount = new BankAccount();
+        System.out.println("Current Balance: $1000");
+        System.out.println("Press Enter to start both threads simultaneously");
+        input.nextLine();
+        FamilyMember member1 = new FamilyMember(sharedAccount, "Husband");
+        FamilyMember member2 = new FamilyMember(sharedAccount, "Wife");
+        member1.start();
+        member2.start();
+    }
+}
