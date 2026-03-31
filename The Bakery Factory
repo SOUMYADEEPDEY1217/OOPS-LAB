@@ -1,0 +1,68 @@
+import java.util.*;
+
+class Bakery {
+    private final List<String> tray = new ArrayList<>();
+    private final int maxCapacity;
+
+    public Bakery(int capacity) {
+        this.maxCapacity = capacity;
+    }
+
+    public synchronized void bakeBread() {
+        while (tray.size() == maxCapacity) {
+            try {
+                System.out.println("[BAKER] Tray is FULL. Waiting...");
+                wait();
+            } catch (InterruptedException e) {}
+        }
+        tray.add("Loaf");
+        System.out.println("[BAKER] Added a loaf. Tray: " + tray.size() + "/" + maxCapacity);
+        notifyAll(); 
+    }
+
+    public synchronized void buyBread() {
+        while (tray.isEmpty()) {
+            try {
+                System.out.println("[CUSTOMER] Tray is EMPTY. Waiting...");
+                wait();
+            } catch (InterruptedException e) {}
+        }
+        tray.remove(0);
+        System.out.println("[CUSTOMER] Bought a loaf. Remaining: " + tray.size());
+        notifyAll(); 
+    }
+}
+
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+
+        System.out.print("Enter tray capacity (e.g., 5): ");
+        int capacity = sc.nextInt();
+
+        System.out.print("Enter total loaves to bake for the day: ");
+        int totalLoaves = sc.nextInt();
+
+        Bakery bakery = new Bakery(capacity);
+
+        Thread baker = new Thread(() -> {
+            for (int i = 0; i < totalLoaves; i++) {
+                bakery.bakeBread();
+                try { Thread.sleep(300); } catch (InterruptedException e) {} 
+            }
+            System.out.println("--- Baker has finished for the day ---");
+        });
+
+        Thread customer = new Thread(() -> {
+            for (int i = 0; i < totalLoaves; i++) {
+                bakery.buyBread();
+                try { Thread.sleep(600); } catch (InterruptedException e) {} 
+            }
+            System.out.println("--- Customer is full and leaving ---");
+        });
+
+        System.out.println("\nStarting Production...\n");
+        baker.start();
+        customer.start();
+    }
+}
