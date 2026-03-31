@@ -1,0 +1,49 @@
+import java.util.Scanner;
+class TicketCounter {
+    private int availableSeats = 50;
+    public void bookTicket(String name, int seats) {
+        System.out.println("Welcome to the portal, " + name + "!");
+        try { 
+            Thread.sleep(500); 
+        } catch (InterruptedException e) {}
+        synchronized(this) {
+        System.out.println("\n" + name + " is checking for " + seats + " seats");
+            if (availableSeats >= seats) {
+                availableSeats -= seats;
+            System.out.println("SUCCESS: " + seats + " seats booked for " + name);
+            System.out.println("Remaining Seats: " + availableSeats);
+            } else {
+                System.out.println("FAILURE: Not enough seats for " + name);
+            }
+        }
+    }
+}
+class Customer extends Thread {
+    TicketCounter counter;
+    String name;
+    int seatsToBook;
+    Customer(TicketCounter counter, String name, int seatsToBook) {
+        this.counter = counter;
+        this.name = name;
+        this.seatsToBook = seatsToBook;
+    }
+    public void run() {
+        counter.bookTicket(name, seatsToBook);
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner scanner = new Scanner(System.in);
+        TicketCounter sharedCounter = new TicketCounter();
+        System.out.print("Enter number of customers trying to book: ");
+        int count = scanner.nextInt();
+        Customer[] customers = new Customer[count];
+        for (int i = 0; i < count; i++) {
+        customers[i] = new Customer(sharedCounter, "Customer-" + (i + 1), 5);
+        }
+        System.out.println("Starting Booking Process ");
+        for (Customer c : customers) {
+            c.start();
+        }
+    }
+}
