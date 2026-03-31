@@ -1,0 +1,50 @@
+import java.util.Scanner;
+class RadioChannel {
+    private boolean isQuestionTurn = true;
+    public synchronized void askQuestion(String msg) {
+        while (!isQuestionTurn) {
+            try { wait(); } catch (InterruptedException e) {}
+        }
+        System.out.println("\n[RADIO] Sender: " + msg + " Over.");
+        isQuestionTurn = false;
+        notify(); 
+    }
+    public synchronized void answerQuestion(String msg) {
+        while (isQuestionTurn) {
+            try { wait(); } catch (InterruptedException e) {}
+        }
+        System.out.println("[RADIO] Receiver: " + msg + " Over.");
+        isQuestionTurn = true;
+        notify(); 
+    }
+}
+public class Main {
+    public static void main(String[] args) {
+        Scanner sc = new Scanner(System.in);
+        RadioChannel channel = new RadioChannel();
+        System.out.print("How many messages will be in this conversation? ");
+        int count = sc.nextInt();
+        sc.nextLine();
+        String[] questions = new String[count];
+        String[] answers = new String[count];
+        for (int i = 0; i < count; i++) {
+            System.out.print("Enter Question " + (i + 1) + ": ");
+            questions[i] = sc.nextLine();
+            System.out.print("Enter Answer " + (i + 1) + ": ");
+            answers[i] = sc.nextLine();
+        }
+        System.out.println("\n--- Starting Radio Transmission ---");
+        Thread sender = new Thread(() -> {
+            for (String q : questions) {
+                channel.askQuestion(q);
+            }
+        });
+        Thread receiver = new Thread(() -> {
+            for (String a : answers) {
+                channel.answerQuestion(a);
+            }
+        });
+        sender.start();
+        receiver.start();
+    }
+}
